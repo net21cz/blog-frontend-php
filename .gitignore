@@ -1,0 +1,23 @@
+### Intellij ###
+.idea/
+.idea_modules/
+out/
+*.iws
+*.iml
+
+### Eclipse ###
+.settings/
+.project
+.classpath
+.cache-main
+
+### Dist ###
+*.log
+*.zip
+*.tar.gz
+*.rar
+target/
+build/
+dist/
+
+*.sql
