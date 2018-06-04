@@ -70,12 +70,14 @@ class Dispatcher {
   
   private function buildController($controllerName) {
     $controllerClassname = ucfirst($controllerName) . 'Controller';
-    include_once "./application/{$controllerClassname}.php";
+    require_once "./application/{$controllerClassname}.php";
     
     return new $controllerClassname();    
   }
   
   private function parsePath($path) {
+    $path = !empty($path) && $path[strlen($path) - 1] == '/' ? substr($path, 0, strlen($path) - 1) : $path;
+    $path = substr($path, 4);// TODO remove
     if (empty($path)) {
       return array();
     }
@@ -83,7 +85,7 @@ class Dispatcher {
     if ($queryPos !== FALSE) {
       $path = substr($path, 0, $queryPos);
     }
-    return explode('/', $path);
+    return explode('/', $path[0] == '/' ? substr($path, 1) : $path);
   }
   
   private function parseParams($params) {
