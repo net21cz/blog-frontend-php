@@ -51,7 +51,7 @@ class Request {
     $this->controller = $controller;
     $this->params = $params;
   }
-}
+}     
 
 class Dispatcher {
 
@@ -72,7 +72,16 @@ class Dispatcher {
     $controllerClassname = ucfirst($controllerName) . 'Controller';
     require_once "./application/{$controllerClassname}.php";
     
-    return new $controllerClassname();    
+    switch ($controllerName) {
+      case 'index':
+        require_once "./infrastructure/CategoryRepoREST.php";
+        require_once "./infrastructure/AuthorRepoREST.php";
+        require_once "./infrastructure/OptionsRepoREST.php";
+                
+        return new blog\IndexController(new blog\CategoryRepoREST(), new blog\AuthorRepoREST(), new blog\OptionsRepoREST());    
+    }
+        
+    throw new Exception("Unknown controller: {$controllerName}");    
   }
   
   private function parsePath($path) {

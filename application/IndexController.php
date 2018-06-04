@@ -18,7 +18,7 @@ class IndexController {
     $this->optionsRepo = $optionsRepo;
   }
   
-  public function blogInfoRequest() {
+  public function index() {
     $categories = $this->categoryRepo->fetchAll();
     $categoriesDto = array();
         

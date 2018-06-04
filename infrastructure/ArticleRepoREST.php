@@ -1,23 +1,10 @@
 <?php
 namespace blog\articles;
 
-use \PDO;
-
 require_once __DIR__ . '/../domain/Article.php';
 require_once __DIR__ . '/../domain/ArticleRepo.php';
 
-class ArticleRepoPDO implements ArticleRepo {
- 
-    private $conn;
-    
-    private $articles_table = "serendipity_entries";
-    private $categories_table = "serendipity_category";
-    private $articles_categories_table = "serendipity_entrycat";
-    private $authors_table = "serendipity_authors";
-  
-    public function __construct(PDO $conn){
-        $this->conn = $conn;
-    }        
+class ArticleRepoREST implements ArticleRepo {
     
     public function fetchOne($articleId) {
         $q = "SELECT a.id, a.title, a.body summary, a.extended text, a.timestamp, 
