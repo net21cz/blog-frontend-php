@@ -37,10 +37,10 @@ function route($path, $params) {
 }
 
 // /////////////////////////////////////////////////////////////////////////////
-// /////// DO NOT MODIFY THE CODE BELOW ////////////////////////////////////////
-// /////////////////////////////////////////////////////////////////////////////
 
 header("Content-Type: text/html; charset=UTF-8");
+
+require_once __DIR__ . '/config/services.config.php';
 
 class Request {
   
@@ -74,11 +74,9 @@ class Dispatcher {
     
     switch ($controllerName) {
       case 'index':
-        require_once "./infrastructure/CategoryRepoREST.php";
-        require_once "./infrastructure/AuthorRepoREST.php";
-        require_once "./infrastructure/OptionsRepoREST.php";
-                
-        return new blog\IndexController(new blog\CategoryRepoREST(), new blog\AuthorRepoREST(), new blog\OptionsRepoREST());    
+        require_once "./infrastructure/BlogRepoREST.php";
+        $controllerClassname = "blog\\{$controllerClassname}";        
+        return new $controllerClassname(new blog\BlogRepoREST(ENDPOINT_BLOG));    
     }
         
     throw new Exception("Unknown controller: {$controllerName}");    
@@ -113,12 +111,21 @@ class View {
   }
   
   public function show() {
-    $viewFilename = ucfirst($controllerName) . 'View';
-    include_once "./application/{$viewFilename}.php";
+    $view = $this->buildView($this->viewName);
+    $view->render();
   }
   
-  public function __get($key) {
-    isset($this->model[$key]) ? $this->model[$key] : "__{$key}__";
+  private function buildView($viewName) {
+    $viewClassname = ucfirst($viewName) . 'View';
+    require_once "./application/{$viewClassname}.php";
+    
+    switch ($viewName) {
+      case 'index':
+        $viewClassname = "blog\\{$viewClassname}";
+        return new $viewClassname($this->model);    
+    }
+        
+    throw new Exception("Unknown view: {$viewName}");    
   }
 }
 

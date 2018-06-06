@@ -1,25 +1,22 @@
 <?php
 namespace blog;
 
-require_once __DIR__ . '/../domain/CategoryRepo.php';
-require_once __DIR__ . '/../domain/AuthorRepo.php';
-require_once __DIR__ . '/../domain/OptionsRepo.php';
+require_once __DIR__ . '/mvc/Controller.php';
+
+require_once __DIR__ . '/../domain/BlogRepo.php';
+
 require_once __DIR__ . '/dto/BlogInfoDTO.php';
 
-class IndexController {
+class IndexController extends \mvc\Controller {
 
-  private $categoryRepo;
-  private $authorRepo;
-  private $optionsRepo;
+  private $blogRepo;
 
-  public function __construct(CategoryRepo $categoryRepo, AuthorRepo $authorRepo, OptionsRepo $optionsRepo){                                           
-    $this->categoryRepo = $categoryRepo;
-    $this->authorRepo = $authorRepo;
-    $this->optionsRepo = $optionsRepo;
+  public function __construct(BlogRepo $blogRepo){                                           
+    $this->blogRepo = $blogRepo;
   }
   
-  public function index() {
-    $categories = $this->categoryRepo->fetchAll();
+  public function index() {  
+    $categories = $this->blogRepo->categories();
     $categoriesDto = array();
         
     foreach ($categories as $c) {
@@ -29,7 +26,7 @@ class IndexController {
       );
     }
     
-    $authors = $this->authorRepo->fetchAll();
+    $authors = $this->blogRepo->authors();
     $authorsDto = array();
         
     foreach ($authors as $a) {
@@ -40,7 +37,7 @@ class IndexController {
       );
     }
     
-    $options = $this->optionsRepo->fetchAll(array('blogTitle', 'blogDescription'));
+    $options = $this->blogRepo->options();
         
     return new BlogInfoDTO(
       $options['blogTitle']->value,
@@ -48,9 +45,5 @@ class IndexController {
       $categoriesDto,
       $authorsDto
     );
-  }
-  
-  private function getIfSet($params, $var, $def = null) {
-    return isset($params[$var]) ? $params[$var] : $def;
   }
 }
