@@ -7,11 +7,7 @@ require_once __DIR__ . '/dto/BlogInfoDTO.php';
 
 class IndexView extends \mvc\View {
 
-  public function __construct(BlogInfoDTO $blogInfo){                                           
-    $this->model = $blogInfo;
-  }
-  
-  protected function content() {    
-    return 'abc';
+  public function __construct($model){
+    $this->model = $model;
   }
 }

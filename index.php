@@ -62,7 +62,7 @@ class Dispatcher {
     $request = route($path, $params);
     
     $controller = $this->buildController($request->controller);      
-    $model = $controller->index();
+    $model = $controller->index($request->params);
     $view = new View($request->controller, $model);
     
     $view->show();
@@ -75,8 +75,10 @@ class Dispatcher {
     switch ($controllerName) {
       case 'index':
         require_once "./infrastructure/BlogRepoREST.php";
+        require_once "./infrastructure/ArticleRepoREST.php";
+        
         $controllerClassname = "blog\\{$controllerClassname}";        
-        return new $controllerClassname(new blog\BlogRepoREST(ENDPOINT_BLOG));    
+        return new $controllerClassname(new blog\BlogRepoREST(ENDPOINT_BLOG), new blog\articles\ArticleRepoREST(ENDPOINT_ARTICLES));    
     }
         
     throw new Exception("Unknown controller: {$controllerName}");    

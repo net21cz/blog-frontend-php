@@ -29,6 +29,7 @@ class ArticleController {
         $article->category->id,
         $article->category->name
       ),      
+      
       new AuthorDTO(
         $article->author->id,
         $article->author->name,
