@@ -1,5 +1,5 @@
-# Blog Back-end Services
+# Blog Front-end Services (PHP)
 
 ## Installation
 
-Change credentials in `config/db.config.php`
+Change endpoints in `config/services.config.php`
