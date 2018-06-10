@@ -88,7 +88,6 @@ class Dispatcher {
   
   private function parsePath($path) {
     $path = !empty($path) && $path[strlen($path) - 1] == '/' ? substr($path, 0, strlen($path) - 1) : $path;
-    $path = substr($path, 4);// TODO remove
     if (empty($path)) {
       return array();
     }

@@ -31,7 +31,7 @@ class ArticleRepoREST implements ArticleRepo {
     $article->id = (int)$a->id;
     $article->title = $a->title;
     $article->summary = $a->summary;
-    $article->body = $a->text;
+    $article->body = $a->body;
     $article->timestamp = $a->createdAt;
     
     $article->category = new ArticleCategory();

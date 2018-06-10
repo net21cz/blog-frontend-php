@@ -25,6 +25,12 @@ class ArticleController extends \blog\BlogController {
     
     $article = $this->loadArticle((int)$params['id']);
     
+    if (!$article || !$article->title) {
+      http_response_code(404);      
+    }
+    
+    $blogInfo->title = $article->title;
+    
     return array(
       'blog' => $blogInfo,
       'article' => $article
