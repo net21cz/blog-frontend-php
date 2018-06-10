@@ -10,6 +10,10 @@ function route($path, $params) {
     return new Request('index', $params);
   }
   
+  if ($path[0] === 'privacypolicy') {
+    return new Request('static', array('content' => 'privacypolicy'));
+  }
+  
   if (preg_match('/[a-z0-9-]+-[0-9]+/', $path[0]) && !isset($path[1])) {
       
     $params['id'] = (int)substr($path[0], strrpos($path[0], '-') + 1);
@@ -71,6 +75,12 @@ class Dispatcher {
         
         $controllerClassname = "blog\\articles\\{$controllerClassname}";        
         return new $controllerClassname(new blog\BlogRepoREST(ENDPOINT_BLOG), new blog\articles\ArticleRepoREST(ENDPOINT_ARTICLES));
+        
+      case 'static':
+        require_once "./infrastructure/BlogRepoREST.php";
+        
+        $controllerClassname = "blog\\{$controllerClassname}";        
+        return new $controllerClassname(new blog\BlogRepoREST(ENDPOINT_BLOG));
     }
         
     throw new Exception("Unknown controller: {$controllerName}");    
@@ -120,6 +130,10 @@ class View {
       
       case 'article':
         $viewClassname = "blog\\articles\\{$viewClassname}";
+        return new $viewClassname($this->model);
+        
+      case 'static':
+        $viewClassname = "blog\\{$viewClassname}";
         return new $viewClassname($this->model);
     }
         

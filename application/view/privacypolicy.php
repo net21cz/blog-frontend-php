@@ -1,8 +1,4 @@
-<html>
-<head>
-  <meta charset="utf-8">
-</head>
-<body>
+<main role="main" class="container">  
 
 <h1>Privacy Policy</h1>
 This privacy policy has been compiled to better serve those who are 
@@ -81,4 +77,6 @@ data processors.</div><span id="canSpam"></span><br><div class="blueText"><stron
  CAN-SPAM Act is a law that sets the rules for commercial email, 
 establishes requirements for commercial messages, gives recipients the 
 right to have emails stopped from being sent to them, and spells out 
-tough penalties for violations.<br><br></div><div class="innerText"><strong>We collect your email address in order to:</strong></div><div class="innerText"><br><strong>To be in accordance with CANSPAM, we agree to the following:</strong></div><div class="innerText"><strong><br>If at any time you would like to unsubscribe from receiving future emails, you can email us at</strong></div> and we will promptly remove you from <strong>ALL</strong> correspondence.</div><br><span id="ourCon"></span><br><div class="blueText"><strong>Contacting Us</strong></div><br><div class="innerText">If there are any questions regarding this privacy policy, you may contact us using the information below.<br><br></div><div class="innerText">blog.net21.cz</div><div class="innerText"><br>Last Edited on 2018-04-29</div></body></html>
+tough penalties for violations.<br><br></div><div class="innerText"><strong>We collect your email address in order to:</strong></div><div class="innerText"><br><strong>To be in accordance with CANSPAM, we agree to the following:</strong></div><div class="innerText"><strong><br>If at any time you would like to unsubscribe from receiving future emails, you can email us at</strong></div> and we will promptly remove you from <strong>ALL</strong> correspondence.</div><br><span id="ourCon"></span><br><div class="blueText"><strong>Contacting Us</strong></div><br><div class="innerText">If there are any questions regarding this privacy policy, you may contact us using the information below.<br><br></div><div class="innerText">blog.net21.cz</div><div class="innerText"><br>Last Edited on 2018-04-29</div>
+<br>
+</main>

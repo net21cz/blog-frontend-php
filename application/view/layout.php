@@ -43,7 +43,7 @@
           <div class="col">© Tomas Tulka, NET21 s.r.o. </div>
           <div class="col text-right">
             <a href="/">Home</a> |
-            <a href="/privacypolicy.html" target="_blank">Privacy Policy</a>
+            <a href="/privacypolicy" target="_blank">Privacy Policy</a>
           </div>
         </div>
       </div>
