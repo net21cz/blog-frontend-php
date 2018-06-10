@@ -22,11 +22,11 @@
               <?php
               foreach($this->blog->categories as $category) { 
               ?>            
-                <a class="nav-link" href="/?category=<?= $category->id ?>"><?= $category->name ?></a>              
+                <a class="nav-link extended-nav" href="/?category=<?= $category->id ?>"><?= $category->name ?></a>              
               <?php } ?>            
               <a class="nav-link" href="/about-1">About</a>
             </nav>
-            <div class="col-2 ext-links">
+            <div class="ext-links">
               <a href="https://twitter.com/tomas_tulka"><img src="/assets/img/twitter.png"></a>
               <a href="https://github.com/ttulka"><img src="/assets/img/github.png"></a>
             </div>
@@ -40,8 +40,8 @@
     <footer class="blog-footer">
       <div class="container">
         <div class="row no-gutters">
-          <div class="col">© <?= date('Y') ?> Tomas Tulka, NET21 s.r.o. </div>
-          <div class="col text-right">
+          <div class="col extended-nav">© <?= date('Y') ?> Tomas Tulka, NET21 s.r.o.</div>
+          <div class="col footer-menu">
             <a href="/">Home</a> |
             <a href="/privacypolicy" target="_blank">Privacy Policy</a>
           </div>
