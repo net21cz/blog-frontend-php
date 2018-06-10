@@ -31,6 +31,10 @@ abstract class View {
     return $out;
   }
   
+  function slugify($s){
+     return strtolower(preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9-]+/', '---', $s)));
+  }
+  
   public function __get($key) {
     if (is_array($this->model)) {
       if (isset($this->model[$key])) {

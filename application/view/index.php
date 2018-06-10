@@ -9,23 +9,23 @@
   <?php
   foreach ($this->articles['items'] as $article) { ?>      
     <div class="blog-post">
-        <h2 class="blog-post-title"><?= $article->title ?></h2>
-        <p class="blog-post-meta"><?= gmdate("Y-m-d", $article->createdAt) ?> by <a href="#"><?= $article->author->name ?></a></p>
+        <h2 class="blog-post-title"><a href="<?= $this->slugify($article->title . '-' . $article->id) ?>" class="h1"><?= $article->title ?></a></h2>
+        <p class="blog-post-meta"><?= gmdate("d/m/Y", $article->createdAt) ?> by <a href="/?author=<?= $article->author->id ?>"><?= $article->author->name ?></a></p>
         <p><?= $article->summary ?></p>
     </div>
   <?php } ?>
     
     <nav class="blog-pagination">
       <?php
-      if ($this->articles['next'] === TRUE) { ?>
-        <a class="btn btn-outline-primary" href="/?page=<?= $this->articles['page'] + 1 ?>">Older</a>
+      if ($this->hasNext()) { ?>
+        <a class="btn btn-outline-primary" href="<?= $this->nextUrl() ?>">Older</a>
       <?php } else { ?>
         <a class="btn btn-outline-primary disabled" href="#">Older</a>
       <?php } ?>
       
       <?php
-      if ($this->articles['next'] === TRUE) { ?>
-        <a class="btn btn-outline-secondary" href="/?page=<?= $this->articles['page'] - 1 ?>">Newer</a>
+      if ($this->hasPrevious()) { ?>
+        <a class="btn btn-outline-secondary" href="<?= $this->previousUrl() ?>">Newer</a>
       <?php } else { ?>
         <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
       <?php } ?>

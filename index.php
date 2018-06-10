@@ -10,30 +10,15 @@ function route($path, $params) {
     return new Request('index', $params);
   }
   
-  if ($path[0] == 'article' && !empty($path[1])) {
+  if (preg_match('/[a-z0-9-]+-[0-9]+/', $path[0]) && !isset($path[1])) {
       
-    $params['id'] = (int)$path[1];
+    $params['id'] = (int)substr($path[0], strrpos($path[0], '-') + 1);
     return new Request('article', $params);
   }
   
-  if ($path[0] == 'author' && !empty($path[1])) {
-      
-    $params['authorId'] = (int)$path[1];
-    return new Request('index', $params);
-  }
-  
-  if ($path[0] == 'programming') {
-      
-    $params['categoryId'] = 1;
-    return new Request('index', $params);
-  }
-  if ($path[0] == 'miscellaneous') {
-      
-    $params['categoryId'] = 2;
-    return new Request('index', $params);
-  }
-  
   http_response_code(404);
+  
+  return new Request('index', $params);
 }
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -78,7 +63,14 @@ class Dispatcher {
         require_once "./infrastructure/ArticleRepoREST.php";
         
         $controllerClassname = "blog\\{$controllerClassname}";        
-        return new $controllerClassname(new blog\BlogRepoREST(ENDPOINT_BLOG), new blog\articles\ArticleRepoREST(ENDPOINT_ARTICLES));    
+        return new $controllerClassname(new blog\BlogRepoREST(ENDPOINT_BLOG), new blog\articles\ArticleRepoREST(ENDPOINT_ARTICLES));
+            
+      case 'article':
+        require_once "./infrastructure/BlogRepoREST.php";
+        require_once "./infrastructure/ArticleRepoREST.php";
+        
+        $controllerClassname = "blog\\articles\\{$controllerClassname}";        
+        return new $controllerClassname(new blog\BlogRepoREST(ENDPOINT_BLOG), new blog\articles\ArticleRepoREST(ENDPOINT_ARTICLES));
     }
         
     throw new Exception("Unknown controller: {$controllerName}");    
@@ -125,6 +117,10 @@ class View {
       case 'index':
         $viewClassname = "blog\\{$viewClassname}";
         return new $viewClassname($this->model);    
+      
+      case 'article':
+        $viewClassname = "blog\\articles\\{$viewClassname}";
+        return new $viewClassname($this->model);
     }
         
     throw new Exception("Unknown view: {$viewName}");    

@@ -13,42 +13,49 @@ class ArticleRepoREST implements ArticleRepo {
   } 
     
   public function fetchOne($articleId) {
-      $stmt->bindValue('id', (int)$articleId, PDO::PARAM_INT);        
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $this->endpoint . '/'. (int)$articleId);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    
+    $response = curl_exec($curl); 
+    //$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+       
+    $jsonData = json_decode($response); 
+    
+    $a = $jsonData->data;       
       
-      $article = null;  
-             
-      if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-        $article = new Article();
-        
-        $article->id = (int)$row['id'];
-        $article->title = $row['title'];
-        $article->summary = $row['summary'];
-        $article->body = $row['text'];
-        $article->timestamp = $row['timestamp'];
-        
-        $article->category = new ArticleCategory();
-        $article->category->id = (int)$row['categoryId'];
-        $article->category->name = $row['categoryName'];
-        
-        $article->author = new ArticleAuthor();
-        $article->author->id = (int)$row['authorId'];
-        $article->author->name = $row['authorName'];
-        $article->author->email = $row['authorEmail'];
-      }
-           
-      return $article;
+    $article = new Article();
+    
+    $article->id = (int)$a->id;
+    $article->title = $a->title;
+    $article->summary = $a->summary;
+    $article->body = $a->text;
+    $article->timestamp = $a->createdAt;
+    
+    $article->category = new ArticleCategory();
+    $article->category->id = (int)$a->category->id;
+    $article->category->name = $a->category->name;
+    
+    $article->author = new ArticleAuthor();
+    $article->author->id = (int)$a->author->id;
+    $article->author->name = $a->author->name;
+    $article->author->email = $a->author->email;
+         
+    return $article;
   }
   
-  function fetchAll($categoryId = null, $authorId = null, $start = 0) {
+  function fetchAll($categoryId = null, $authorId = null, $page = 0) {
     $params = '';
     if ($categoryId) {
-      $params .= "category={$categoryId}&";
+      $params .= "categoryId={$categoryId}&";
     }
     if ($authorId) {
-      $params .= "author={$authorId}&";
+      $params .= "authorId={$authorId}&";
     }
-    if ($start > 0) {
-      $params .= "page={$categoryId}&";
+    if ($page) {
+      $params .= "page={$page}&";
     }
      
     $curl = curl_init();
@@ -95,9 +102,9 @@ class ArticleRepoREST implements ArticleRepo {
   private function containsRel($rel, $data) {
     foreach ($data as $item) {
       if ($item->rel === $rel) {
-        return true;
+        return TRUE;
       }
     }
-    return false;
+    return FALSE;
   }
 }

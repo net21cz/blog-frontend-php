@@ -19,9 +19,12 @@
           <div class="row no-gutters">
             <nav class="nav col">
               <a class="nav-link active" href="/">Home</a>
-              <a class="nav-link" href="programming.html">Programming</a>
-              <a class="nav-link" href="stuff.html">Another nerdy stuff</a>
-              <a class="nav-link" href="about.html">About</a>            
+              <?php
+              foreach($this->blog->categories as $category) { 
+              ?>            
+                <a class="nav-link" href="/?category=<?= $category->id ?>"><?= $category->name ?></a>              
+              <?php } ?>            
+              <a class="nav-link" href="/about-1">About</a>
             </nav>
             <div class="col-2 ext-links">
               <a href="https://twitter.com/tomas_tulka"><img src="assets/img/twitter.png"></a>
