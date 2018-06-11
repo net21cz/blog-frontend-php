@@ -5,6 +5,7 @@
   <article class="blog-post">
       <p class="blog-post-meta"><?= gmdate("d/m/Y", $this->article->createdAt) ?> by <a href="/?author=<?= $this->article->author->id ?>"><?= $this->article->author->name ?></a></p>
       <p><?= $this->article->summary ?></p>
+      <hr>
       <p><?= $this->article->body ?></p>
   </article>
 
