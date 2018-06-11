@@ -119,7 +119,10 @@ h2, .h2 {
   font-size: 1.5rem;
 }
 h3, .h3 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+}
+h4, .h4 {
+  font-size: 1.0rem;
 }
 .blog-description {
   font-size: 1.1rem;
@@ -131,10 +134,13 @@ h3, .h3 {
     font-size: 3.5rem;
   }
   h2, .h2 {
-    font-size: inherit;
+    font-size: 2.5rem;
   }
   h3, .h3 {
-    font-size: inherit;
+    font-size: 1.8rem;
+  }
+  h4, .h4 {
+    font-size: 1.3rem;
   }
 }
 
