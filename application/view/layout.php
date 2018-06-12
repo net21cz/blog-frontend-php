@@ -18,13 +18,13 @@
         <div class="container">
           <div class="row no-gutters">
             <nav class="nav col">
-              <a class="nav-link active" href="/">Home</a>
+              <a class="nav-link <?= $this->isActiveCaption() ? 'active' : '' ?>" href="/">Home</a>
               <?php
               foreach($this->blog->categories as $category) { 
               ?>            
-                <a class="nav-link extended-nav" href="/?category=<?= $category->id ?>"><?= $category->name ?></a>              
+                <a class="nav-link extended-nav <?= $this->isActiveCaption("category={$category->id}") ? 'active' : '' ?>" href="/?category=<?= $category->id ?>"><?= $category->name ?></a>              
               <?php } ?>            
-              <a class="nav-link" href="/about-me-1">About</a>
+              <a class="nav-link <?= $this->isActiveCaption("about-me-1") ? 'active' : '' ?>" href="/about-me-1">About</a>
             </nav>
             <div class="ext-links">
               <a href="https://twitter.com/tomas_tulka"><img src="/assets/img/twitter.png"></a>
@@ -43,7 +43,7 @@
           <div class="col extended-nav">© <?= date('Y') ?> Tomas Tulka, NET21 s.r.o.</div>
           <div class="col footer-menu">
             <a href="/">Home</a> |
-            <a href="/privacypolicy" target="_blank">Privacy Policy</a>
+            <a href="/privacypolicy">Privacy Policy</a>
           </div>
         </div>
       </div>

@@ -1,12 +1,12 @@
 <?php
 namespace blog;
 
-require_once __DIR__ . '/mvc/View.php';
+require_once __DIR__ . '/BlogView.php';
 
-class IndexView extends \mvc\View {
+class IndexView extends BlogView {
 
   public function __construct($model) {
-    $this->model = $model;
+    parent::__construct($model);
   }
   
   function hasNext() {
