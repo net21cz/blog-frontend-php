@@ -10,9 +10,14 @@ class ArticleView extends \blog\BlogView {
   }
   
   protected function isActiveCaption($subUrl = null) {
-    $categoryId = $this->model['article']->category->id;
-    $matchSubUrl = "category=$categoryId";
-  
-    return $subUrl === $matchSubUrl;
+    if ($this->model['article']->id == 1) {
+      return $subUrl === 'id=1';
+      
+    } else {
+      $categoryId = $this->model['article']->category->id;
+      $matchSubUrl = "category=$categoryId";
+    
+      return $subUrl === $matchSubUrl;
+    }
   }
 }

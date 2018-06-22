@@ -24,7 +24,7 @@
               ?>            
                 <a class="nav-link extended-nav <?= $this->isActiveCaption("category={$category->id}") ? 'active' : '' ?>" href="/?category=<?= $category->id ?>"><?= $category->name ?></a>              
               <?php } ?>            
-              <a class="nav-link <?= $this->isActiveCaption("about-me-1") ? 'active' : '' ?>" href="/about-me-1">About</a>
+              <a class="nav-link <?= $this->isActiveCaption("id=1") ? 'active' : '' ?>" href="/about-me-1">About</a>
             </nav>
             <div class="ext-links">
               <a href="https://twitter.com/tomas_tulka"><img src="/assets/img/twitter.png"></a>
