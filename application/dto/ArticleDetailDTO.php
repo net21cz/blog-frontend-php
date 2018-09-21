@@ -10,8 +10,9 @@ class ArticleDetailDTO {
   public $createdAt;
   public $category;
   public $author;
+  public $comments;
 
-  public function __construct($id, $title, $summary, $body, $createdAt, $category, $author) {
+  public function __construct($id, $title, $summary, $body, $createdAt, $category, $author, $comments) {
     $this->id = $id;
     $this->title = $title;
     $this->summary = $summary;                                           
@@ -19,5 +20,6 @@ class ArticleDetailDTO {
     $this->createdAt = $createdAt;
     $this->category = $category;
     $this->author = $author;
+    $this->comments = $comments;
   }
 }
