@@ -100,9 +100,11 @@ class ArticleRepoREST implements ArticleRepo {
   }
   
   private function containsRel($rel, $data) {
-    foreach ($data as $item) {
-      if ($item->rel === $rel) {
-        return TRUE;
+    if (!empty($data)) {
+      foreach ($data as $item) {
+        if ($item->rel === $rel) {
+          return TRUE;
+        }
       }
     }
     return FALSE;

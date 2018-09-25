@@ -23,19 +23,19 @@ class CommentRepoREST implements CommentRepo {
     curl_close($curl);
        
     $jsonData = json_decode($response);
-    
+        
     $comments = array();  
            
-    foreach ($jsonData->comments as $c) {
+    /*foreach ($jsonData->comments as $c) {
       $c = $c->data;
       $comment = new Comment();
       
       $comment->id = (int)$c->id;
-      $comment->body = $c->body
+      $comment->body = $c->body;
       $comment->createdAt = $c->createdAt;
       
       array_push($comments, $comment);
-    }
+    }*/
          
     return array(
       'items' => $comments,
@@ -64,16 +64,18 @@ class CommentRepoREST implements CommentRepo {
     $comment = new Comment();
       
     $comment->id = 0;
-    $comment->body = $body
+    $comment->body = $body;
     $comment->createdAt = time();
     
     return $comment;
   }
   
   private function containsRel($rel, $data) {
-    foreach ($data as $item) {
-      if ($item->rel === $rel) {
-        return TRUE;
+    if (!empty($data)) {
+      foreach ($data as $item) {
+        if ($item->rel === $rel) {
+          return TRUE;
+        }
       }
     }
     return FALSE;

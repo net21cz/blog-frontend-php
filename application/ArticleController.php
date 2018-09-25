@@ -18,7 +18,7 @@ class ArticleController extends \blog\BlogController {
   private $articleRepo;
   private $commentRepo;
 
-  public function __construct(\blog\BlogRepo $blogRepo, ArticleRepo $articleRepo, CommentRepo $commentRepo){
+  public function __construct(\blog\BlogRepo $blogRepo, ArticleRepo $articleRepo, \blog\comments\CommentRepo $commentRepo){
     parent::__construct($blogRepo);
     $this->articleRepo = $articleRepo;
     $this->commentRepo = $commentRepo;
@@ -88,7 +88,7 @@ class ArticleController extends \blog\BlogController {
         $c->id,
         $c->body,
         $c->createdAt
-      )
+      );
     }
     
     return $commentsDto;
