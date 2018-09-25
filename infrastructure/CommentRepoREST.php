@@ -23,10 +23,10 @@ class CommentRepoREST implements CommentRepo {
     curl_close($curl);
        
     $jsonData = json_decode($response);
-        
+    
     $comments = array();  
            
-    /*foreach ($jsonData->comments as $c) {
+    foreach ($jsonData->comments as $c) {
       $c = $c->data;
       $comment = new Comment();
       
@@ -35,7 +35,7 @@ class CommentRepoREST implements CommentRepo {
       $comment->createdAt = $c->createdAt;
       
       array_push($comments, $comment);
-    }*/
+    }
          
     return array(
       'items' => $comments,
