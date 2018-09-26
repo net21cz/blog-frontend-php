@@ -13,6 +13,8 @@ require_once __DIR__ . '/dto/CategoryDTO.php';
 require_once __DIR__ . '/dto/AuthorDTO.php';
 require_once __DIR__ . '/dto/CommentDTO.php';
 
+@session_start();
+
 class ArticleController extends \blog\BlogController {
 
   private $articleRepo;
@@ -25,6 +27,8 @@ class ArticleController extends \blog\BlogController {
   }
   
   public function index($params) {
+    global $_SESSION;
+    
     $blogInfo = $this->loadBlogInfo();
         
     $article = $this->loadArticle((int)$params['id']);
@@ -35,16 +39,31 @@ class ArticleController extends \blog\BlogController {
     
     $blogInfo->title = $article->title;
     
-    return array(
+    $model = array(
       'blog' => $blogInfo,
       'article' => $article
     );
+    
+    // add a new comment
+    if (!empty($params['body']) && isset($params['captcha'])) {
+      
+      if ($params['captcha'] !== $_SESSION['security_code_blogcomments']) {
+        $model['errors'] = array('captcha'); 
+        $model['addingComment'] = new CommentDTO(0, $params['body'], time());
+      
+      } else {
+        $newComment = $this->saveComment($article->id, $params['body']);        
+        $model['addedComment'] = $newComment;
+      }
+    }
+    
+    return $model;
   }
   
-  public function saveComment($articleId, $body) {
+  private function saveComment($articleId, $body) {
     $comment = $this->commentRepo->add((int)$articleId, htmlspecialchars($body));
     
-    return new CategoryDTO(
+    return new CommentDTO(
       $comment->id,
       $comment->body,
       $comment->createdAt
@@ -80,11 +99,11 @@ class ArticleController extends \blog\BlogController {
   
   private function loadComments($articleId) {
     $comments = $this->commentRepo->fetchAll((int)$articleId);
-    
+
     $commentsDto = array();
     
-    foreach ($comments as $c) {
-      $commentsDto[] = new CategoryDTO(
+    foreach ($comments['items'] as $c) {
+      $commentsDto[] = new CommentDTO(
         $c->id,
         $c->body,
         $c->createdAt

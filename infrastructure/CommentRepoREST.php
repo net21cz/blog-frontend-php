@@ -27,7 +27,6 @@ class CommentRepoREST implements CommentRepo {
     $comments = array();  
            
     foreach ($jsonData->comments as $c) {
-      $c = $c->data;
       $comment = new Comment();
       
       $comment->id = (int)$c->id;
@@ -48,22 +47,17 @@ class CommentRepoREST implements CommentRepo {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $this->endpoint);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_HEADER, true);
     curl_setopt($curl, CURLOPT_POST, true); 
     curl_setopt($curl, CURLOPT_POSTFIELDS, array('articleId' => $articleId, 'body' => $body)); 
     
     $response = curl_exec($curl); 
-    //$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     curl_close($curl);
-    
-    // TODO return added Comment object
-    echo "<!-- new comment added ";
-    print_r($response);
-    echo " -->";
-    
+        
     $comment = new Comment();
       
-    $comment->id = 0;
+    $comment->id = $status === 201 ? 1 : -1;
     $comment->body = $body;
     $comment->createdAt = time();
     

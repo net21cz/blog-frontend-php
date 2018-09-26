@@ -13,11 +13,9 @@ function route($method, $path, $params) {
       return new Request('static', 'index', array('content' => 'privacypolicy'));
     }
     
-    if (preg_match('/[a-z0-9-]+-[0-9]+/', $path[0]) && !isset($path[1])) {
-        
-      $params['id'] = (int)substr($path[0], strrpos($path[0], '-') + 1);
-      $action = 'POST' === $method ? 'saveComment' : 'index';
-      return new Request('article', $action, $params);
+    if (preg_match('/[a-z0-9-]+-[0-9]+/', $path[0]) && !isset($path[1])) {        
+      $params['id'] = (int)substr($path[0], strrpos($path[0], '-') + 1);        
+      return new Request('article', 'index', $params);
     }    
   }
   
