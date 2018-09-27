@@ -9,7 +9,7 @@
       <p><?= $this->article->body ?></p>
   </article>
   
-  <?php if (isset($_REQUEST['comments'])) { 
+  <?php 
   $comment = $this->addingComment; 
   $errors = $this->errors;
   ?>
@@ -50,6 +50,5 @@
         </div>  
     <?php } } ?>  
   </aside>
-  <?php } ?>
 
 </main><!-- /.container -->
