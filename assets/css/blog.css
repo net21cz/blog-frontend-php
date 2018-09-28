@@ -2,10 +2,7 @@
  * Globals
  */
 
-@media (min-width: 48em) {
-  html {
-    font-size: 18px;
-  }
+@media (min-width: 48em) {  
 }
 
 body {
@@ -28,6 +25,10 @@ h6,
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   color: #333;
+}
+
+code, pre {
+  font-family: Courier;
 }
 
 
@@ -61,6 +62,23 @@ h6,
 .nav-link:focus {
   color: #fff;
   background-color: transparent;
+}  
+.extended-nav {
+    display: none;
+  }
+@media (min-width: 30em) {
+  .extended-nav {
+    display: inherit;
+  }
+}     
+.ext-links {
+  text-align: right;
+}
+.ext-links img {   
+  width: 2em;
+  height: 2em;
+  position: relative;
+  margin: 0.7rem 0.5rem 0 0;  
 }
 
 /* Active state gets a caret at the bottom */
@@ -79,13 +97,11 @@ h6,
   border-right: .3rem solid transparent;
   border-bottom: .3rem solid;
   border-left: .3rem solid transparent;
-}
-
+}   
 
 /*
  * Blog name and description
- */
-
+ */ 
 .blog-header {
   padding-bottom: 1.25rem;
   margin-bottom: 2rem;
@@ -96,6 +112,18 @@ h6,
   font-size: 2rem;
   font-weight: 400;
 }
+.blog-post-title {
+  font-size: 1.5rem;
+}
+h2, .h2 {
+  font-size: 1.5rem;
+}
+h3, .h3 {
+  font-size: 1.3rem;
+}
+h4, .h4 {
+  font-size: 1.0rem;
+}
 .blog-description {
   font-size: 1.1rem;
   color: #999;
@@ -104,6 +132,15 @@ h6,
 @media (min-width: 40em) {
   .blog-title {
     font-size: 3.5rem;
+  }
+  h2, .h2 {
+    font-size: 2.5rem;
+  }
+  h3, .h3 {
+    font-size: 1.8rem;
+  }
+  h4, .h4 {
+    font-size: 1.3rem;
   }
 }
 
@@ -140,7 +177,6 @@ h6,
 /*
  * Blog posts
  */
-
 .blog-post {
   margin-bottom: 2rem;
 }
@@ -167,17 +203,11 @@ h6,
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
-
-.ext-links {
-  text-align: right;
+.footer-menu {
+  text-align: center;
 }
-.ext-links img {
-  width: 2em;
-  height: 2em;
-  position: relative;
-  margin: 0.7rem 0.5rem 0 0;  
-}
-
-.blog-comments {
-  padding: 2em 0 3em 0;
+@media (min-width: 30em) {
+  .footer-menu {
+    text-align: right;
+  }
 }
