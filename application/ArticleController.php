@@ -53,7 +53,8 @@ class ArticleController extends \blog\BlogController {
       
       } else {
         $newComment = $this->saveComment($article->id, $params['body']);        
-        $model['addedComment'] = $newComment;
+        $model['addedComment'] = $newComment; 
+        
         $this->notifyNewCommentAdded($newComment->id, $newComment->body);
       }
     }
