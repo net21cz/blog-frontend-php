@@ -28,6 +28,7 @@ function route($method, $path, $params) {
 
 header("Content-Type: text/html; charset=UTF-8");
 
+require_once __DIR__ . '/config/app.config.php';
 require_once __DIR__ . '/config/services.config.php';
 
 class Request {

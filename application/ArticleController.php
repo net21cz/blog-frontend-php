@@ -54,6 +54,7 @@ class ArticleController extends \blog\BlogController {
       } else {
         $newComment = $this->saveComment($article->id, $params['body']);        
         $model['addedComment'] = $newComment;
+        $this->notifyNewCommentAdded($newComment->id, $newComment->body);
       }
     }
     
@@ -68,6 +69,10 @@ class ArticleController extends \blog\BlogController {
       $comment->body,
       $comment->createdAt
     );
+  }
+  
+  private function notifyNewCommentAdded($id, $body) {
+    mail(EMAIL_ADMIN, 'new comment added', "ID: {$id}\n{$body}");
   }
 
   private function loadArticle($id) {
