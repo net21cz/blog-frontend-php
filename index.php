@@ -7,20 +7,20 @@
 function route($method, $path, $params) {
   // Implement your own routing rules
   // ...
-  if (!empty($path)) {
-    
+  if (!empty($path) && !empty($path[0])) {
+  
     if ($path[0] === 'privacypolicy') {
       return new Request('static', 'index', array('content' => 'privacypolicy'));
     }
     
-    if (preg_match('/[a-z0-9-]+-[0-9]+/', $path[0]) && !isset($path[1])) {        
+    if (preg_match('/^[a-z0-9-]+-[0-9]+$/', $path[0]) && !isset($path[1])) {        
       $params['id'] = (int)substr($path[0], strrpos($path[0], '-') + 1);        
       return new Request('article', 'index', $params);
-    }    
+    }
+    
+    http_response_code(404);    
   }
   
-  http_response_code(404);
-    
   return new Request('index', 'index', $params);
 }
 
