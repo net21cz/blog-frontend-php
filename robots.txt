@@ -1,0 +1,3 @@
+User-agent: *
+Allow: *
+Sitemap: http://blog.net21.cz/sitemap
