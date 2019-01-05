@@ -18,15 +18,21 @@ class SitemapController extends \mvc\Controller {
   }
   
   public function index($params) {
-    $articles = $this->articleRepo->fetchAll(); 
-    $sitemapEntriesDto = array(); 
-        
-    foreach ($articles['items'] as $a) {
-      $sitemapEntriesDto[] = new SitemapEntryDTO(
-        slugify($a->title . '-' . $a->id),
-        $a->timestamp
-      );
-    }
+    $sitemapEntriesDto = array();
+    $nextPage = 0;
+    do {
+      $articles = $this->articleRepo->fetchAll(null, null, $nextPage); 
+                
+      foreach ($articles['items'] as $a) {
+        $sitemapEntriesDto[] = new SitemapEntryDTO(
+          slugify($a->title . '-' . $a->id),
+          $a->timestamp
+        );
+      }
+      
+      $nextPage = !empty($articles['next']) ? $nextPage + 1 : null;
+      
+    } while ($nextPage > 0);
     
     return array(
       'entries' => $sitemapEntriesDto
