@@ -8,8 +8,19 @@ function route($method, $path, $params) {
   // Implement your own routing rules
   // ...
   if (!empty($path) && !empty($path[0])) {
+    
+    if ($path[0] === 'sitemap') {
+      header('Content-type: text/xml');
+      header('Pragma: public');
+      header('Cache-control: private');
+      header('Expires: -1');
+      return new Request('sitemap', 'index');
+      
+    } else {
+      header("Content-Type: text/html; charset=UTF-8");
+    }
   
-    if ($path[0] === 'privacypolicy') {
+    if ($path[0] === 'privacypolicy') { 
       return new Request('static', 'index', array('content' => 'privacypolicy'));
     }
     
@@ -25,8 +36,6 @@ function route($method, $path, $params) {
 }
 
 // /////////////////////////////////////////////////////////////////////////////
-
-header("Content-Type: text/html; charset=UTF-8");
 
 require_once __DIR__ . '/config/app.config.php';
 require_once __DIR__ . '/config/services.config.php';
@@ -84,6 +93,12 @@ class Dispatcher {
                new blog\articles\ArticleRepoREST(ENDPOINT_ARTICLES),
                new blog\comments\CommentRepoREST(ENDPOINT_COMMENTS));
         
+      case 'sitemap':
+        require_once "./infrastructure/ArticleRepoREST.php";
+        
+        $controllerClassname = "blog\\{$controllerClassname}";        
+        return new $controllerClassname(new blog\articles\ArticleRepoREST(ENDPOINT_ARTICLES));
+        
       case 'static':
         require_once "./infrastructure/BlogRepoREST.php";
         
@@ -137,6 +152,10 @@ class View {
       
       case 'article':
         $viewClassname = "blog\\articles\\{$viewClassname}";
+        return new $viewClassname($this->model);
+        
+      case 'sitemap':
+        $viewClassname = "blog\\{$viewClassname}";
         return new $viewClassname($this->model);
         
       case 'static':

@@ -9,8 +9,6 @@ require_once __DIR__ . '/dto/BlogInfoDTO.php';
 
 class StaticController extends BlogController {
 
-  private $articleRepo;
-
   public function __construct(BlogRepo $blogRepo){                                           
     parent::__construct($blogRepo);
   }

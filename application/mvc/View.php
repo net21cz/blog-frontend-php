@@ -1,6 +1,8 @@
 <?php
 namespace mvc;
 
+require_once __DIR__ . "/../util/slugify.php";
+
 abstract class View {
 
   protected $model;
@@ -31,8 +33,8 @@ abstract class View {
     return $out;
   }
   
-  function slugify($s){
-     return strtolower(preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9-]+/', '---', $s)));
+  function slugify($s){      
+     return slugify($s);
   }
   
   public function __get($key) {
