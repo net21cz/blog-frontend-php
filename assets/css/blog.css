@@ -180,6 +180,9 @@ h4, .h4 {
 .blog-post {
   margin-bottom: 2rem;
 }
+.blog-post img {
+  max-width: 100%;
+}
 .blog-post-title {
   margin-bottom: .25rem;
   font-size: 2.0rem;
