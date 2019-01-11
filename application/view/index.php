@@ -10,7 +10,7 @@
   foreach ($this->articles['items'] as $article) { ?>      
     <div class="blog-post">
         <h2 class="blog-post-title"><a href="<?= $this->slugify($article->title . '-' . $article->id) ?>" class="h2"><?= $article->title ?></a></h2>
-        <p class="blog-post-meta"><?= gmdate("d/m/Y", $article->createdAt) ?> by <a href="/?author=<?= $article->author->id ?>"><?= $article->author->name ?></a></p>
+        <p class="blog-post-meta"><?= gmdate("Y-m-d", $article->createdAt) ?> by <a href="/?author=<?= $article->author->id ?>"><?= $article->author->name ?></a></p>
         <p><?= $article->summary ?></p>
     </div>
   <?php } ?>
