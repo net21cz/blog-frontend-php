@@ -6,3 +6,6 @@ RewriteRule !\.(js|ico|gif|jpg|png|css|html|htm|xml|txt|dat|json|php|ttf|woff|wo
 php_flag magic_quotes_gpc off
 php_flag register_globals off
 php_flag short_open_tag on
+
+# App settings
+SetEnv BACKEND_ACCESS_KEY yKnWnTjOiyoOv9WmVRbyTQ1gIMTp5cc12coaPKjvLYA77wMMplqamd011i6q3Uo

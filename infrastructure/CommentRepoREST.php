@@ -14,7 +14,7 @@ class CommentRepoREST implements CommentRepo {
   
   function fetchAll($articleId) {
     $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $this->endpoint . '?articleId='. $articleId);
+    curl_setopt($curl, CURLOPT_URL, $this->endpoint . '?articleId='. $articleId . '&secret=' . BACKEND_ACCESS_KEY);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HEADER, false);
     
@@ -49,7 +49,7 @@ class CommentRepoREST implements CommentRepo {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HEADER, true);
     curl_setopt($curl, CURLOPT_POST, true); 
-    curl_setopt($curl, CURLOPT_POSTFIELDS, array('articleId' => $articleId, 'body' => $body)); 
+    curl_setopt($curl, CURLOPT_POSTFIELDS, array('articleId' => $articleId, 'body' => $body, 'secret' => BACKEND_ACCESS_KEY)); 
     
     $response = curl_exec($curl); 
     $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
