@@ -20,9 +20,10 @@ class BlogRepoREST implements BlogRepo {
   
   private function load() {
     $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $this->endpoint . '?secret=' . BACKEND_ACCESS_KEY);
+    curl_setopt($curl, CURLOPT_URL, $this->endpoint);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Api-Key: ' . BACKEND_ACCESS_KEY));
     
     $response = curl_exec($curl); 
     //$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);

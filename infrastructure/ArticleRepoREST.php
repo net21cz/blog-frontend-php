@@ -14,9 +14,10 @@ class ArticleRepoREST implements ArticleRepo {
     
   public function fetchOne($articleId) {
     $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $this->endpoint . '/'. (int)$articleId . '?secret=' . BACKEND_ACCESS_KEY);
+    curl_setopt($curl, CURLOPT_URL, $this->endpoint . '/'. (int)$articleId);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Api-Key: ' . BACKEND_ACCESS_KEY)); 
     
     $response = curl_exec($curl); 
     //$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -57,13 +58,12 @@ class ArticleRepoREST implements ArticleRepo {
     if ($page) {
       $params .= "page={$page}&";
     }
-    
-    $params .= 'secret=' . BACKEND_ACCESS_KEY;
-     
+         
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $this->endpoint . '?'. trim($params, '&'));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Api-Key: ' . BACKEND_ACCESS_KEY));
     
     $response = curl_exec($curl); 
     //$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
