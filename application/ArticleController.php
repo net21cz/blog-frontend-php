@@ -37,7 +37,7 @@ class ArticleController extends \blog\BlogController {
       http_response_code(404);      
     }
     
-    $blogInfo->title = $article->title;
+    $blogInfo->title = $article->title . ' by ' . $article->author->name;
     
     $model = array(
       'blog' => $blogInfo,
