@@ -86,12 +86,10 @@ class Dispatcher {
       case 'article':
         require_once "./infrastructure/BlogRepoREST.php";
         require_once "./infrastructure/ArticleRepoREST.php";
-        require_once "./infrastructure/CommentRepoREST.php";
-        
+                
         $controllerClassname = "blog\\articles\\{$controllerClassname}";        
         return new $controllerClassname(new blog\BlogRepoREST(ENDPOINT_BLOG), 
-               new blog\articles\ArticleRepoREST(ENDPOINT_ARTICLES),
-               new blog\comments\CommentRepoREST(ENDPOINT_COMMENTS));
+               new blog\articles\ArticleRepoREST(ENDPOINT_ARTICLES));
         
       case 'sitemap':
         require_once "./infrastructure/ArticleRepoREST.php";
