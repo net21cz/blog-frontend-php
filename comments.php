@@ -1,6 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");    // TODO http://blog.net21.cz
 header("Access-Control-Allow-Methods: GET,POST");
+header("Access-Control-Allow-Headers: Content-Type");
 
 require_once __DIR__ . '/config/app.config.php';
 require_once __DIR__ . '/config/services.config.php';
@@ -13,9 +14,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
       
       $commentId = parseCommentIdFromPath($_SERVER['REQUEST_URI']);
       if (!empty($commentId)) {
-        answersRequest($articleId, $commentId, $_REQUEST['page']);
+        echo answersRequest($articleId, $commentId, $_GET['page']);
       } else {
-        commentsRequest($articleId, $_REQUEST['page']);
+        echo commentsRequest($articleId, $_GET['page']);
       }
       
     } else {
@@ -23,7 +24,25 @@ switch ($_SERVER['REQUEST_METHOD']) {
       http_response_code(400);
       echo 'Article ID must be set!';
     }    
-    break;                           
+    break;       
+    
+  case 'POST':
+    if (!empty($_POST['author']) && !empty($_POST['body'])) {          
+      $articleId = parseArticleIdFromPath($_SERVER['REQUEST_URI']);
+      $commentId = parseCommentIdFromPath($_SERVER['REQUEST_URI']);
+      
+      $comment = addRequest($articleId, $commentId, $_POST);      
+      http_response_code(201);
+      header("Content-Type: application/json; charset=UTF-8");
+      echo $comment;
+      
+    } else {
+      header("Content-Type: text/plain; charset=UTF-8");
+      http_response_code(400);
+      echo 'All parameters must be set!';
+      print_r($_POST);
+    }
+    break;                    
   
   case 'OPTIONS':
     header('Allow: GET POST OPTIONS');
@@ -35,11 +54,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
 }
 
 function commentsRequest($articleId, $page = null) {
-    echo getRequest((int)$articleId . '/comments' . (!empty($page) ? "?page={$page}" : ''));
+    return getRequest((int)$articleId . '/comments' . (!empty($page) ? "?page={$page}" : ''));
 }
 
 function answersRequest($articleId, $commentId, $page = null) {
-    echo getRequest((int)$articleId . '/comments/' . (int)$commentId . (!empty($page) ? "?page={$page}" : ''));
+    return getRequest((int)$articleId . '/comments/' . (int)$commentId . (!empty($page) ? "?page={$page}" : ''));
+}
+
+function addRequest($articleId, $commentId, $params) {
+    return postRequest((int)$articleId . '/comments' . (!empty($commentId) ? "/{$commentId}" : '' ), $params);
 }
 
 function getRequest($href) {
@@ -78,6 +101,23 @@ function getRequest($href) {
     }
        
     return json_encode($json);
+}
+
+function postRequest($href, $params) {
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, ENDPOINT_ARTICLES . '/'. $href);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Api-Key: ' . BACKEND_ACCESS_KEY));
+    
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $params); 
+    
+    $response = curl_exec($curl); 
+    //$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+       
+    return $response;
 }
 
 function parseArticleIdFromPath($path) {

@@ -4,8 +4,6 @@ header("Pragma: no-cache");
 header("Cache-Control: no-cache");
 header("Expires: ".GMDate("D, d M Y H:i:s")." GMT");
 
-@session_start();
-
 function generateCode($length, $possible = '23456789bcdfghkmnpqrstvwxyz') {
   $code = '';                                                              	
 	for ($i = 0; $i < $length; $i++) { 
@@ -14,10 +12,8 @@ function generateCode($length, $possible = '23456789bcdfghkmnpqrstvwxyz') {
 	return $code;
 }
   
-function cretateCaptcha($width, $height, $characters, $font_size, $suffix = 'def') {
-  global $_SESSION;
-  
-	$code = generateCode($characters);
+function cretateCaptcha($width, $height, $characters, $font_size, $name) {
+  $code = generateCode($characters);
 
 	$im = imagecreate($width, $height) or die('Cannot Initialize new GD image stream');
   
@@ -46,13 +42,13 @@ function cretateCaptcha($width, $height, $characters, $font_size, $suffix = 'def
 	imagejpeg($im);
 	imagedestroy($im);
   
-	$_SESSION['security_code_' . $suffix] = $code;    
+	setcookie($name, $code, 0, '/');    
 }
 
 $width = $_GET['width'] ? $_GET['width'] : '120';
 $height = $_GET['height'] ? $_GET['height'] : '30';
 $characters = $_GET['characters'] ? $_GET['characters'] : '4';
 $font_size = $_GET['font_size'] ? $_GET['font_size'] : '20';
-$suffix = $_GET['suffix'] ? $_GET['suffix'] : 'def';
+$name = $_GET['name'] ? $_GET['name'] : 'captcha';
 
-cretateCaptcha($width, $height, $characters, $font_size, $suffix);
+cretateCaptcha($width, $height, $characters, $font_size, $name);
