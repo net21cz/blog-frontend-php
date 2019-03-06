@@ -9,14 +9,11 @@
       <p><?= $this->article->body ?></p>
   </article>
   
-  <?php
-  if (!empty($_REQUEST['comments'])) { ?>
   <aside class="blog-comments">
     <noscript>You need to enable JavaScript to see comments.</noscript>
     <div id="comments" articleid="<?= $this->article->id ?>">Rendering comments...</div>
     <script src="/assets/js/comments.min.js"></script>
     <link href="/assets/css/comments.min.css" rel="stylesheet"> 
   </aside>
-  <?php } ?>
 
 </main><!-- /.container -->
