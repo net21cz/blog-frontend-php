@@ -31,7 +31,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
       $articleId = parseArticleIdFromPath($_SERVER['REQUEST_URI']);
       $commentId = parseCommentIdFromPath($_SERVER['REQUEST_URI']);
       
-      $comment = addRequest($articleId, $commentId, $_POST);      
+      $comment = addRequest($articleId, $commentId, $_POST);
+      
+      notifyNewCommentAdded($comment);
+            
       http_response_code(201);
       header("Content-Type: application/json; charset=UTF-8");
       echo $comment;
@@ -118,6 +121,10 @@ function postRequest($href, $params) {
     curl_close($curl);
        
     return $response;
+} 
+  
+function notifyNewCommentAdded($comment) {
+  mail(EMAIL_ADMIN, 'new comment added', $comment);
 }
 
 function parseArticleIdFromPath($path) {
