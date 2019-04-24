@@ -6,7 +6,7 @@
     <meta name="author" content="Tomas Tulka - NET21 s.r.o.">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.png">
                     
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/blog.css" rel="stylesheet">
