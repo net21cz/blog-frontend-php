@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: http://blog.net21.cz");
+header("Access-Control-Allow-Origin: " . ORIGIN_URL);
 header("Access-Control-Allow-Methods: GET,POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
