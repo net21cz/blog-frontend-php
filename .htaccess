@@ -3,7 +3,7 @@ RewriteEngine on
 RewriteRule ^articles/([0-9]+)/comments$ comments.php [NC,L]
 RewriteRule ^articles/([0-9]+)/comments/([0-9]+)$ comments.php [NC,L] 
 
-RewriteRule !\.(js|ico|gif|jpg|png|css|html|htm|xml|txt|dat|json|php|ttf|woff|woff2)$ index.php [NC,L] 
+RewriteRule !\.(js|ico|gif|jpg|png|css|html|htm|xml|txt|dat|pdf|json|php|ttf|woff|woff2)$ index.php [NC,L] 
 
 # PHP settings
 php_flag magic_quotes_gpc off
